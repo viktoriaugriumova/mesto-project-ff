@@ -18,9 +18,9 @@ function renderCards(deleteCard) {
         cardElement.querySelector('.card__image').src = initialCards[i].link;
 
         cardContainer.append(cardElement);
-
-        // deleteCardButton.addEventListener('click', deleteCard);
     }
+
+    deleteCardButton.addEventListener('click', deleteCard);
 };
 
 // Вывести карточки на страницу
