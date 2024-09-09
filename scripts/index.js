@@ -1,12 +1,13 @@
 // DOM узлы
 const cardContainer = document.querySelector('.places__list');
-const deleteCardButton = document.querySelector('.card__delete-button');
 
 //Функция удаления карточки
-function deleteCard() {
-    const card = deleteCardButton.closest('.places__item');
+function deleteCard(event) {
+    const card = event.target.closest('.places__item');
+    console.log(card);
     card.remove();
 };
+
 
 // Функция создания карточки
 function renderCards(deleteCard) {
@@ -18,9 +19,13 @@ function renderCards(deleteCard) {
         cardElement.querySelector('.card__image').src = initialCards[i].link;
 
         cardContainer.append(cardElement);
+
+        const deleteCardButton = cardElement.querySelector('.card__delete-button');
+        console.log(deleteCardButton);
+        console.log(typeof(deleteCardButton));
+        deleteCardButton.addEventListener('click', deleteCard);
     }
 
-    deleteCardButton.addEventListener('click', deleteCard);
 };
 
 // Вывести карточки на страницу
