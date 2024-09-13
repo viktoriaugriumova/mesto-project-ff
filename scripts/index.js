@@ -10,7 +10,7 @@ function deleteCard(event) {
 
 
 // Функция создания карточки
-function renderCards(deleteCard) {
+function renderCards() {
     for (let i = 0; i < initialCards.length; i++) {
         const cardTemplate = document.querySelector('#card-template').content;
         const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
@@ -18,14 +18,11 @@ function renderCards(deleteCard) {
         cardElement.querySelector('.card__title').textContent = initialCards[i].name;
         cardElement.querySelector('.card__image').src = initialCards[i].link;
 
-        cardContainer.append(cardElement);
-
         const deleteCardButton = cardElement.querySelector('.card__delete-button');
-        console.log(deleteCardButton);
-        console.log(typeof(deleteCardButton));
         deleteCardButton.addEventListener('click', deleteCard);
-    }
 
+        cardContainer.append(cardElement);
+    }
 };
 
 // Вывести карточки на страницу
