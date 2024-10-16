@@ -11,7 +11,7 @@ export function deleteCard(event) {
 
 // Обработчик кнопки лайк
 export function makeLikeButtonActive(event) {
-	event.target.classList.toggle('card__like-button_active')
+	event.target.classList.toggle('card__like-button_is-active');
 }
 
 // Функция создания карточки
@@ -27,7 +27,7 @@ export function createCard(newCard, deleteCard, makeLikeButtonActive) {
     deleteCardButton.addEventListener('click', deleteCard);
 
     const cardLikeButton = cardElement.querySelector('.card__like-button')
-    cardLikeButton.addEventListener('click', makeLikeButtonActive)
+    cardLikeButton.addEventListener('click', makeLikeButtonActive);
 
     return cardElement;
 };
@@ -35,7 +35,9 @@ export function createCard(newCard, deleteCard, makeLikeButtonActive) {
 // Вывести карточки на страницу
 export function renderCards() {
     for (let i = 0; i < initialCards.length; i++) {
-        const newCard = createCard(initialCards[i], deleteCard);
+        const newCard = createCard(initialCards[i], deleteCard, makeLikeButtonActive);
         cardsContainer.append(newCard);
     }
 };
+
+

@@ -80,9 +80,3 @@ export function addNewCard(evt) {
     closePopup(cardAddPopup)
     cardAddForm.reset()
 }
-
-
-
-
-
-
