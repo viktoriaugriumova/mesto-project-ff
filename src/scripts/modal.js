@@ -34,6 +34,7 @@ export function closeOnEsc(event) {
     }
 }
 
+// Закрытие на крестик
 export function closeOnCross(event) {
     const closeButton = event.target.closest('.popup__close');
     if (closeButton) {

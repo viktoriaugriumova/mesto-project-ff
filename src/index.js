@@ -1,47 +1,9 @@
 import './pages/index.css';
-import { initialCards } from './scripts/cards.js'
+import { renderCards } from './scripts/card.js';
+import { cardsContainer } from './scripts/card.js';
 import { closeOnOverlay, closeOnEsc, closeOnCross, openPopup, closePopup } from './scripts/modal.js';
 
-
-// DOM узлы
-const cardsContainer = document.querySelector('.places__list');
-
-
-//Функция удаления карточки
-function deleteCard(event) {
-    const card = event.target.closest('.places__item');
-    card.remove();
-};
-
-// Функция создания карточки
-function createCard(newCard, deleteCard) {
-    const cardTemplate = document.querySelector('#card-template').content;
-    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-
-    cardElement.querySelector('.card__title').textContent = newCard.name;
-    cardElement.querySelector('.card__image').src = newCard.link;
-    cardElement.querySelector('.card__image').alt = newCard.alt;
-
-    const deleteCardButton = cardElement.querySelector('.card__delete-button');
-    deleteCardButton.addEventListener('click', deleteCard);
-
-    return cardElement;
-};
-
-// Вывести карточки на страницу
-function renderCards() {
-    for (let i = 0; i < initialCards.length; i++) {
-        const newCard = createCard(initialCards[i], deleteCard);
-        cardsContainer.append(newCard);
-    }
-};
-
-renderCards();
-
-
-
-// DOM узлы МОДАЛКИ
-
+// DOM узлы модалки редактирования профиля
 const profileEditButton = document.querySelector('.profile__edit-button')
 const profileEditPopup = document.querySelector('.popup_type_edit')
 const profileName = document.querySelector('.profile__title')
@@ -50,7 +12,8 @@ const profileEditForm = profileEditPopup.querySelector('.popup__form')
 const nameInput = profileEditForm.querySelector('input[name="name"]')
 const professionInput = profileEditForm.querySelector('input[name="description"]')
 
-// Открываем профиль
+
+// Открываем модалку редактирования профиля
 profileEditButton.addEventListener('click', () => {
     nameInput.value = profileName.textContent
     professionInput.value = profileProfession.textContent
@@ -58,7 +21,7 @@ profileEditButton.addEventListener('click', () => {
 })
 
 // Событие для сохранения редактирования профиля
-function handleFormSubmit(evt) {
+function saveChangedProfile(evt) {
     evt.preventDefault()
     profileName.textContent = nameInput.value
     profileProfession.textContent = professionInput.value
@@ -66,10 +29,9 @@ function handleFormSubmit(evt) {
 }
 
 // Слушатель на событие клик по Сохранить в форме профиля
-profileEditPopup.addEventListener('submit', handleFormSubmit); 
+profileEditPopup.addEventListener('submit', saveChangedProfile);
 
-
-// Вешаем слушатель на событие клик по оверлею
+// Вешаем слушатель на событие клик по оверлею для всех попапов
 export function initializePopupOverlayClose() {
     const popup = document.querySelector('.popup_is-opened');
     if (popup) {
@@ -77,15 +39,48 @@ export function initializePopupOverlayClose() {
     }
 }
 
-// Вешаем слушатель на событие Esc
+// Вешаем слушатель на событие Esc для всех попапов
 export function initializePopupEscClose() {
     document.addEventListener('keydown', closeOnEsc);
 }
 
-// Вешаем слушатель на событие клика по крестику
+// Вешаем слушатель на событие клика по крестику для всех попапов
 export function initializePopupCloseOnCross() {
     document.addEventListener('click', closeOnCross);
 }
+
+// DOM узлы модалки добавления карточки
+const cardAddButton = document.querySelector('.profile__add-button')
+const cardAddPopup = document.querySelector('.popup_type_new-card')
+const cardAddForm = cardAddPopup.querySelector('.popup__form')
+
+const cardAddNameInput = cardAddForm.querySelector('.popup__input_type_card-name')
+const cardAddLinkInput = cardAddForm.querySelector('.popup__input_type_url')
+
+// Открываем модалку добавления карточки
+cardAddButton.addEventListener('click', () => {
+    openPopup(cardAddPopup)
+})
+
+// Событие для сохранения новой карточки
+export function addNewCard(cardsContainer, createCard, evt) {
+    evt.preventDefault()
+
+    const newCardParameters = {
+        name: cardAddNameInput.value,
+        link: cardAddLinkInput.value,
+    }
+    
+    const newCard = createCard(newCardParameters)
+    cardsContainer.prepend(newCard)
+
+    closePopup(cardAddPopup)
+    cardAddForm.reset()
+}
+
+// Слушатель на событие клик по Сохранить в форме новой карточки
+cardAddForm.addEventListener('submit', addNewCard);
+
 
 
 
