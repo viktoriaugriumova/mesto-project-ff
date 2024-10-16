@@ -12,6 +12,15 @@ const profileEditForm = profileEditPopup.querySelector('.popup__form')
 const nameInput = profileEditForm.querySelector('input[name="name"]')
 const professionInput = profileEditForm.querySelector('input[name="description"]')
 
+// DOM узлы модалки добавления карточки
+const cardAddButton = document.querySelector('.profile__add-button')
+const cardAddPopup = document.querySelector('.popup_type_new-card')
+const cardAddForm = cardAddPopup.querySelector('.popup__form')
+const cardAddNameInput = cardAddForm.querySelector('.popup__input_type_card-name')
+const cardAddLinkInput = cardAddForm.querySelector('.popup__input_type_url')
+
+// Отрисовываем уже имеющиеся карточки из массива
+renderCards();
 
 // Открываем модалку редактирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -20,7 +29,7 @@ profileEditButton.addEventListener('click', () => {
     openPopup(profileEditPopup)
 })
 
-// Событие для сохранения редактирования профиля
+// Рассказываем как именно сохранить данные профиля после редактирования
 function saveChangedProfile(evt) {
     evt.preventDefault()
     profileName.textContent = nameInput.value
@@ -28,10 +37,10 @@ function saveChangedProfile(evt) {
     closePopup(profileEditPopup)
 }
 
-// Слушатель на событие клик по Сохранить в форме профиля
+// Указываем по какому действию сохранять отредактированный профиль
 profileEditPopup.addEventListener('submit', saveChangedProfile);
 
-// Вешаем слушатель на событие клик по оверлею для всех попапов
+// Говорим, что все попапы нужно закрывать кликом по оверлею
 export function initializePopupOverlayClose() {
     const popup = document.querySelector('.popup_is-opened');
     if (popup) {
@@ -39,47 +48,39 @@ export function initializePopupOverlayClose() {
     }
 }
 
-// Вешаем слушатель на событие Esc для всех попапов
+// Говорим, что все попапы нужно закрывать кликом по Esc
 export function initializePopupEscClose() {
     document.addEventListener('keydown', closeOnEsc);
 }
 
-// Вешаем слушатель на событие клика по крестику для всех попапов
+// Говорим, что все попапы нужно закрывать кликом по крестику
 export function initializePopupCloseOnCross() {
     document.addEventListener('click', closeOnCross);
 }
 
-// DOM узлы модалки добавления карточки
-const cardAddButton = document.querySelector('.profile__add-button')
-const cardAddPopup = document.querySelector('.popup_type_new-card')
-const cardAddForm = cardAddPopup.querySelector('.popup__form')
-
-const cardAddNameInput = cardAddForm.querySelector('.popup__input_type_card-name')
-const cardAddLinkInput = cardAddForm.querySelector('.popup__input_type_url')
-
-// Открываем модалку добавления карточки
+// Открываем модалку добавления новой карточки
 cardAddButton.addEventListener('click', () => {
     openPopup(cardAddPopup)
 })
 
-// Событие для сохранения новой карточки
-export function addNewCard(createCard, evt) {
+// Указываем по какому действию сохранять новую карточку
+cardAddForm.addEventListener('submit', addNewCard);
+
+//  Рассказываем как именно сохранить данные новой карточки
+export function addNewCard(evt) {
     evt.preventDefault()
+    const cardTemplate = document.querySelector('#card-template').content;
+    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
-    const newCardParameters = {
-        name: cardAddNameInput.value,
-        link: cardAddLinkInput.value,
-    }
+    cardElement.querySelector('.card__title').textContent = cardAddNameInput.value;
+    cardElement.querySelector('.card__image').src = cardAddLinkInput.value;
 
-    const newCard = createCard(newCardParameters)
-    cardsContainer.prepend(newCard)
+    cardsContainer.prepend(cardElement)
 
     closePopup(cardAddPopup)
     cardAddForm.reset()
 }
 
-// Слушатель на событие клик по Сохранить в форме новой карточки
-cardAddForm.addEventListener('submit', addNewCard);
 
 
 

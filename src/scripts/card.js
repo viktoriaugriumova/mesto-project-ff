@@ -9,8 +9,13 @@ export function deleteCard(event) {
     card.remove();
 };
 
+// Обработчик кнопки лайк
+export function makeLikeButtonActive(event) {
+	event.target.classList.toggle('card__like-button_active')
+}
+
 // Функция создания карточки
-export function createCard(newCard, deleteCard) {
+export function createCard(newCard, deleteCard, makeLikeButtonActive) {
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
@@ -20,6 +25,9 @@ export function createCard(newCard, deleteCard) {
 
     const deleteCardButton = cardElement.querySelector('.card__delete-button');
     deleteCardButton.addEventListener('click', deleteCard);
+
+    const cardLikeButton = cardElement.querySelector('.card__like-button')
+    cardLikeButton.addEventListener('click', makeLikeButtonActive)
 
     return cardElement;
 };
@@ -31,5 +39,3 @@ export function renderCards() {
         cardsContainer.append(newCard);
     }
 };
-
-renderCards();
