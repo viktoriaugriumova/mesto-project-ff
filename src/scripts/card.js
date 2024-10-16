@@ -1,7 +1,6 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js'
 
-// DOM узлы списка карточек
 const cardsContainer = document.querySelector('.places__list');
 
 //Функция удаления карточки

@@ -1,9 +1,9 @@
 import './pages/index.css';
 import { renderCards } from './scripts/card.js';
-import { cardsContainer } from './scripts/card.js';
 import { closeOnOverlay, closeOnEsc, closeOnCross, openPopup, closePopup } from './scripts/modal.js';
 
 // DOM узлы модалки редактирования профиля
+const cardsContainer = document.querySelector('.places__list');
 const profileEditButton = document.querySelector('.profile__edit-button')
 const profileEditPopup = document.querySelector('.popup_type_edit')
 const profileName = document.querySelector('.profile__title')
@@ -63,14 +63,14 @@ cardAddButton.addEventListener('click', () => {
 })
 
 // Событие для сохранения новой карточки
-export function addNewCard(cardsContainer, createCard, evt) {
+export function addNewCard(createCard, evt) {
     evt.preventDefault()
 
     const newCardParameters = {
         name: cardAddNameInput.value,
         link: cardAddLinkInput.value,
     }
-    
+
     const newCard = createCard(newCardParameters)
     cardsContainer.prepend(newCard)
 

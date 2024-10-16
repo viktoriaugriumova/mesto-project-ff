@@ -1,6 +1,5 @@
 import { initializePopupOverlayClose, initializePopupEscClose, initializePopupCloseOnCross } from "../../src/index.js";
 
-
 //Функция открытия модалки
 export function openPopup(popupElement) {
     popupElement.classList.add('popup_is-opened');
