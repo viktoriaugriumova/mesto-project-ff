@@ -19,6 +19,9 @@ const cardAddForm = cardAddPopup.querySelector('.popup__form')
 const cardAddNameInput = cardAddForm.querySelector('.popup__input_type_card-name')
 const cardAddLinkInput = cardAddForm.querySelector('.popup__input_type_url')
 
+// DOM узлы моалки с картинкой
+const imagePopup = document.querySelector('.popup_type_image')
+
 // Отрисовываем уже имеющиеся карточки из массива
 renderCards();
 
@@ -79,4 +82,19 @@ export function addNewCard(evt) {
 
     closePopup(cardAddPopup)
     cardAddForm.reset()
+}
+
+
+export function openImagePopup () {
+    const cardImage = document.querySelectorAll(".card__image");
+
+    for (let i = 0, len = cardImage.length; i < len; i++) {
+        cardImage[i].addEventListener('click', function () {
+            const popupImage = document.querySelector(".popup__image");
+            const popupCaption = document.querySelector(".popup__caption");
+            popupCaption.textContent = cardImage[i].alt;
+            popupImage.src = cardImage[i].src;
+            openPopup(imagePopup);
+        });
+    };
 }

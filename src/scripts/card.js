@@ -1,6 +1,8 @@
+import { openImagePopup } from '../index.js';
 import '../pages/index.css';
 import { initialCards } from './cards.js'
 
+// DOM узлы
 const cardsContainer = document.querySelector('.places__list');
 
 //Функция удаления карточки
@@ -15,7 +17,7 @@ export function makeLikeButtonActive(event) {
 }
 
 // Функция создания карточки
-export function createCard(newCard, deleteCard, makeLikeButtonActive) {
+export function createCard(newCard, deleteCard, makeLikeButtonActive, openImagePopup) {
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
@@ -29,13 +31,16 @@ export function createCard(newCard, deleteCard, makeLikeButtonActive) {
     const cardLikeButton = cardElement.querySelector('.card__like-button')
     cardLikeButton.addEventListener('click', makeLikeButtonActive);
 
+    const cardImage = cardElement.querySelector('.card__image');
+    cardImage.addEventListener('click', openImagePopup)
+
     return cardElement;
 };
 
 // Вывести карточки на страницу
 export function renderCards() {
     for (let i = 0; i < initialCards.length; i++) {
-        const newCard = createCard(initialCards[i], deleteCard, makeLikeButtonActive);
+        const newCard = createCard(initialCards[i], deleteCard, makeLikeButtonActive, openImagePopup);
         cardsContainer.append(newCard);
     }
 };
