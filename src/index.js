@@ -93,7 +93,7 @@ export function addNewCard(evt) {
     cardAddForm.reset()
 }
 
-
+// Рассказываем как и когда открывать попап с картинкой
 export function openImagePopup () {
     const cardImage = document.querySelectorAll(".card__image");
 
