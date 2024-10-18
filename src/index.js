@@ -3,6 +3,7 @@ import { initialCards } from './scripts/cards.js'
 import { createCard, deleteCard, makeLikeButtonActive } from './scripts/card.js';
 import { closeOnOverlay, closeOnEsc, closeOnCross, openPopup, closePopup } from './scripts/modal.js';
 
+
 // DOM узлы модалки редактирования профиля
 const cardsContainer = document.querySelector('.places__list');
 const profileEditButton = document.querySelector('.profile__edit-button')
@@ -52,12 +53,10 @@ function saveChangedProfile(evt) {
 // Указываем по какому действию сохранять отредактированный профиль
 profileEditPopup.addEventListener('submit', saveChangedProfile);
 
-// Говорим, что все попапы нужно закрывать кликом по оверлею
+
 export function initializePopupOverlayClose() {
     const popup = document.querySelector('.popup_is-opened');
-    if (popup) {
-        popup.addEventListener('click', closeOnOverlay);
-    }
+    popup.addEventListener('click', closeOnOverlay);
 }
 
 // Говорим, что все попапы нужно закрывать кликом по Esc
