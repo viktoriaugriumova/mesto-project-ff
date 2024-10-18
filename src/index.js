@@ -74,23 +74,30 @@ cardAddButton.addEventListener('click', () => {
     openPopup(cardAddPopup)
 })
 
-// Указываем по какому действию сохранять новую карточку
-cardAddForm.addEventListener('submit', addNewCard);
+// Создаем новый объект карточки с помощью createCard
+export function createNewCardObject(deleteCard, makeLikeButtonActive, openImagePopup) {
+    const newCardParameters = {
+        name: cardAddForm.querySelector('input[name="place-name"]').value,
+        link: cardAddForm.querySelector('input[name="link"]').value,
+	}
 
-//  Рассказываем как именно сохранить данные новой карточки
-export function addNewCard(evt) {
+	const newCard = createCard(newCardParameters, deleteCard, makeLikeButtonActive, openImagePopup)
+    console.log(newCard);
+    return newCard;
+}
+
+
+// Рассказываем как именно сохранить данные новой карточки
+function addNewCard(evt) {
     evt.preventDefault()
-    const cardTemplate = document.querySelector('#card-template').content;
-    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-
-    cardElement.querySelector('.card__title').textContent = cardAddNameInput.value;
-    cardElement.querySelector('.card__image').src = cardAddLinkInput.value;
-
-    cardsContainer.prepend(cardElement)
-
+    cardsContainer.prepend(createNewCardObject());
     closePopup(cardAddPopup)
     cardAddForm.reset()
 }
+
+// Указываем по какому действию сохранять новую карточку
+cardAddForm.addEventListener('submit', addNewCard);
+
 
 // Рассказываем как и когда открывать попап с картинкой
 export function openImagePopup () {
