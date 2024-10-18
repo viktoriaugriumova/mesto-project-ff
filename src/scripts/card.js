@@ -1,5 +1,4 @@
 import { openImagePopup } from '../index.js';
-import '../pages/index.css';
 import { initialCards } from './cards.js'
 
 // DOM узлы
