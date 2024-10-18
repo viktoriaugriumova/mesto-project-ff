@@ -14,6 +14,7 @@ export function closePopup(popupElement) {
 	popupElement.classList.remove('popup_is-opened')
     document.removeEventListener('click', closeOnCross);
     document.removeEventListener('keydown', closeOnEsc);
+    document.removeEventListener('click', closeOnOverlay);
 }
 
 // Закрытие на оверлей
