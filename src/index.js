@@ -1,5 +1,6 @@
 import './pages/index.css';
-import { renderCards } from './scripts/card.js';
+import { initialCards } from './scripts/cards.js'
+import { createCard, deleteCard, makeLikeButtonActive } from './scripts/card.js';
 import { closeOnOverlay, closeOnEsc, closeOnCross, openPopup, closePopup } from './scripts/modal.js';
 
 // DOM узлы модалки редактирования профиля
@@ -21,6 +22,14 @@ const cardAddLinkInput = cardAddForm.querySelector('.popup__input_type_url')
 
 // DOM узлы моалки с картинкой
 const imagePopup = document.querySelector('.popup_type_image')
+
+// Вывести карточки на страницу
+export function renderCards() {
+    for (let i = 0; i < initialCards.length; i++) {
+        const newCard = createCard(initialCards[i], deleteCard, makeLikeButtonActive, openImagePopup);
+        cardsContainer.append(newCard);
+    }
+};
 
 // Отрисовываем уже имеющиеся карточки из массива
 renderCards();

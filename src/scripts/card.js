@@ -1,6 +1,3 @@
-import { openImagePopup } from '../index.js';
-import { initialCards } from './cards.js'
-
 // DOM узлы
 const cardsContainer = document.querySelector('.places__list');
 
@@ -36,12 +33,12 @@ export function createCard(newCard, deleteCard, makeLikeButtonActive, openImageP
     return cardElement;
 };
 
-// Вывести карточки на страницу
-export function renderCards() {
-    for (let i = 0; i < initialCards.length; i++) {
-        const newCard = createCard(initialCards[i], deleteCard, makeLikeButtonActive, openImagePopup);
-        cardsContainer.append(newCard);
-    }
-};
+// // Вывести карточки на страницу
+// export function renderCards() {
+//     for (let i = 0; i < initialCards.length; i++) {
+//         const newCard = createCard(initialCards[i], deleteCard, makeLikeButtonActive, openImagePopup);
+//         cardsContainer.append(newCard);
+//     }
+// };
 
 
