@@ -53,22 +53,6 @@ function saveChangedProfile(evt) {
 // Указываем по какому действию сохранять отредактированный профиль
 profileEditPopup.addEventListener('submit', saveChangedProfile);
 
-
-export function initializePopupOverlayClose() {
-    const popup = document.querySelector('.popup_is-opened');
-    popup.addEventListener('click', closeOnOverlay);
-}
-
-// Говорим, что все попапы нужно закрывать кликом по Esc
-export function initializePopupEscClose() {
-    document.addEventListener('keydown', closeOnEsc);
-}
-
-// Говорим, что все попапы нужно закрывать кликом по крестику
-export function initializePopupCloseOnCross() {
-    document.addEventListener('click', closeOnCross);
-}
-
 // Открываем модалку добавления новой карточки
 cardAddButton.addEventListener('click', () => {
     openPopup(cardAddPopup)

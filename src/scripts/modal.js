@@ -1,5 +1,3 @@
-import { initializePopupOverlayClose, initializePopupEscClose, initializePopupCloseOnCross } from "../../src/index.js";
-
 //Функция открытия модалки
 export function openPopup(popupElement) {
     popupElement.classList.add('popup_is-opened');
@@ -15,6 +13,22 @@ export function closePopup(popupElement) {
     document.removeEventListener('click', closeOnCross);
     document.removeEventListener('keydown', closeOnEsc);
     document.removeEventListener('click', closeOnOverlay);
+}
+
+// Говорим, что все попапы нужно закрывать кликом по оверлею
+export function initializePopupOverlayClose() {
+    const popup = document.querySelector('.popup_is-opened');
+    popup.addEventListener('click', closeOnOverlay);
+}
+
+// Говорим, что все попапы нужно закрывать кликом по Esc
+export function initializePopupEscClose() {
+    document.addEventListener('keydown', closeOnEsc);
+}
+
+// Говорим, что все попапы нужно закрывать кликом по крестику
+export function initializePopupCloseOnCross() {
+    document.addEventListener('click', closeOnCross);
 }
 
 // Закрытие на оверлей
