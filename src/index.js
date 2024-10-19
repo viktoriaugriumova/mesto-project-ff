@@ -82,18 +82,14 @@ function addNewCard(evt) {
 // Указываем по какому действию сохранять новую карточку
 cardAddForm.addEventListener('submit', addNewCard);
 
+// Открываем модалку с картинкой
+export function openImagePopup(imageUrl, imageAlt) {
+	const popupTypeImage = document.querySelector('.popup_type_image')
+	const popupImage = popupTypeImage.querySelector('.popup__image')
+	const popupCaption = popupTypeImage.querySelector('.popup__caption')
 
-// Рассказываем как и когда открывать попап с картинкой
-export function openImagePopup () {
-    const cardImage = document.querySelectorAll(".card__image");
-
-    for (let i = 0, len = cardImage.length; i < len; i++) {
-        cardImage[i].addEventListener('click', function () {
-            const popupImage = document.querySelector(".popup__image");
-            const popupCaption = document.querySelector(".popup__caption");
-            popupCaption.textContent = cardImage[i].alt;
-            popupImage.src = cardImage[i].src;
-            openPopup(imagePopup);
-        });
-    };
+	popupImage.src = imageUrl
+	popupImage.alt = imageAlt
+	popupCaption.textContent = imageAlt
+	openPopup(popupTypeImage)
 }

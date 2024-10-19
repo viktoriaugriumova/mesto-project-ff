@@ -13,6 +13,7 @@ export function makeLikeButtonActive(event) {
 export function createCard(newCard, deleteCard, makeLikeButtonActive, openImagePopup) {
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+    const cardImage = cardElement.querySelector('.card__image');
 
     cardElement.querySelector('.card__title').textContent = newCard.name;
     cardElement.querySelector('.card__image').src = newCard.link;
@@ -24,8 +25,9 @@ export function createCard(newCard, deleteCard, makeLikeButtonActive, openImageP
     const cardLikeButton = cardElement.querySelector('.card__like-button')
     cardLikeButton.addEventListener('click', makeLikeButtonActive);
 
-    const cardImage = cardElement.querySelector('.card__image');
-    cardImage.addEventListener('click', openImagePopup)
+    cardImage.addEventListener('click', () =>
+		openImagePopup(cardImage.src, cardImage.alt)
+	)
 
     return cardElement;
 };
