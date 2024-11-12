@@ -138,6 +138,7 @@ const isValid = (formElement, formInput) => {
 const setEventListeners = (formElement) => {
     const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
     const buttonElement = formElement.querySelector('.popup__button');
+    toggleButtonState(inputList, buttonElement);
   
     inputList.forEach((formInput) => {
       formInput.addEventListener('input', () => {
