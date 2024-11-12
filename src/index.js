@@ -39,7 +39,7 @@ renderCards();
 profileEditButton.addEventListener('click', () => {
     nameInput.value = profileName.textContent
     professionInput.value = profileProfession.textContent
-    openPopup(profileEditPopup)
+    openPopup(profileEditPopup);
 })
 
 // Рассказываем как именно сохранить данные профиля после редактирования
@@ -93,3 +93,95 @@ export function openImagePopup(imageUrl, imageAlt) {
 	popupCaption.textContent = imageAlt
 	openPopup(popupTypeImage)
 }
+
+//Валидация
+
+const formElement = document.querySelector('.popup__form');
+// const formInput = formElement.querySelectorAll('.popup__input');
+const submitButton = formElement.querySelector('.popup__button');
+
+// const addInputErrorClass = (formElement, formInput, errorMessage) => {
+//     const errorElement = formElement.querySelector(`.${formInput.id}-error`);
+//     formInput.classList.add('popup__input_type_error');
+//     errorElement.textContent = errorMessage;
+//     errorElement.classList.add('form__input-error_active');
+// };
+
+// const deleteInputErrorClass = (formElement, formInput) => {
+//     const errorElement = formElement.querySelector(`.${formInput.id}-error`);
+//     formInput.classList.remove('popup__input_type_error');
+//     errorElement.textContent = '';
+//     errorElement.classList.remove('form__input-error_active');
+// };
+
+
+// const isValid = (formElement, formInput) => {
+//     if (formInput.validity.patternMismatch) {
+//         formInput.setCustomValidity(formInput.dataset.errorMessage);
+//     } else {
+//         formInput.setCustomValidity("");
+//     }
+
+//     if (!formInput.validity.valid) {
+//         addInputErrorClass(formElement, formInput, formInput.validationMessage);
+//     } else {
+//         deleteInputErrorClass(formElement, formInput);
+//     }
+// }; 
+
+
+const addInputErrorClass = (formElement, formInput, errorMessage) => {
+    const errorElement = formElement.querySelector(`.${formInput.id}-error`);
+    if (!errorElement) return; // Пропустить, если элемент не найден
+    console.log("Добавление ошибки:", errorMessage); // Отладка
+    formInput.classList.add('popup__input_type_error');
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add('form__input-error_active');
+};
+
+const deleteInputErrorClass = (formElement, formInput) => {
+    const errorElement = formElement.querySelector(`.${formInput.id}-error`);
+    if (!errorElement) return; // Пропустить, если элемент не найден
+    console.log("Удаление ошибки"); // Отладка
+    formInput.classList.remove('popup__input_type_error');
+    errorElement.textContent = '';
+    errorElement.classList.remove('form__input-error_active');
+};
+
+const isValid = (formElement, formInput) => {
+    console.log("Проверка валидности поля:", formInput.id); // Отладка
+    if (formInput.validity.patternMismatch) {
+        formInput.setCustomValidity(formInput.dataset.errorMessage);
+    } else {
+        formInput.setCustomValidity("");
+    }
+
+    if (!formInput.validity.valid) {
+        addInputErrorClass(formElement, formInput, formInput.validationMessage);
+    } else {
+        deleteInputErrorClass(formElement, formInput);
+    }
+};
+
+//Функция, которая проверяет все поля в форме
+const setEventListeners = (formElement) => {
+    const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  
+    inputList.forEach((formInput) => {
+      formInput.addEventListener('input', () => {
+        isValid(formElement, formInput)
+      });
+    });
+}; 
+
+  //Функция, которая проверяет все формы на странице
+  const enableValidation = () => {
+    const formList = Array.from(document.querySelectorAll('.popup__form'));
+  
+    formList.forEach((formElement) => {
+      setEventListeners(formElement);
+    });
+  };
+  
+
+  enableValidation();
