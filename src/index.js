@@ -37,6 +37,7 @@ renderCards();
 
 // Открываем модалку редактирования профиля
 profileEditButton.addEventListener('click', () => {
+    clearValidation(profileEditPopup);
     nameInput.value = profileName.textContent
     professionInput.value = profileProfession.textContent
     openPopup(profileEditPopup);
@@ -157,6 +158,20 @@ const enableValidation = () => {
     });
 };
 
+//Функция очистки валидации
+const clearValidation = (formElement) => {
+    const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+    const buttonElement = formElement.querySelector('.popup__button');
+
+    inputList.forEach((formInput) => {
+        deleteInputErrorClass(formElement, formInput); // Удаляем классы ошибок
+        formInput.setCustomValidity(""); // Сбрасываем кастомные сообщения об ошибке
+    });
+
+    // Обновляем состояние кнопки
+    toggleButtonState(inputList, buttonElement);
+};
+
 // Функция проверки есть ли невалидный инпут
 const hasInvalidInput = (inputList) => {
     return inputList.some((formInput) => {
@@ -177,4 +192,4 @@ const toggleButtonState = (inputList, buttonElement) => {
     }
 };
   
-  enableValidation();
+enableValidation();
