@@ -99,3 +99,64 @@ export function openImagePopup(imageUrl, imageAlt) {
 
 //Включаем валидацию для всех форм
 enableValidation();
+
+// //API
+
+// //Получение инфы о юзере
+// fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
+//     headers: {
+//       authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c'
+//     }
+// })
+//     .then(res => res.json())
+//     .then((result) => {
+//       console.log(result);
+// });
+
+// //Редактирование 
+// fetch('https://nomoreparties.co/v1/cohortId/users/me', {
+//     method: 'PATCH',
+//     headers: {
+//       authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       name: 'Marie Skłodowska Curie',
+//       about: 'Physicist and Chemist'
+//     })
+//   });
+
+
+
+//API
+
+// DOM узлы профиля
+const profileTitle = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__description');
+const profileImage = document.querySelector('.profile__image');
+
+//Получение инфы о юзере
+function getUser() {
+    return fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
+        headers: {
+          authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c'
+        }
+    })
+        .then(res => res.json())
+        .then((result) => {
+          console.log(result);
+          updateProfileInfo(result);
+    }); 
+}
+
+// Функция обновления инфы о юзере на странице
+function updateProfileInfo(user) {
+    profileTitle.textContent = user.name;
+    profileDescription.textContent = user.about;
+    profileImage.value = user.avatar;
+}
+
+//Вызываем функцию
+getUser();
+
+
