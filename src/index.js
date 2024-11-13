@@ -3,6 +3,7 @@ import { initialCards } from './scripts/cards.js'
 import { createCard, deleteCard, makeLikeButtonActive } from './scripts/card.js';
 import { closeOnOverlay, closeOnEsc, closeOnCross, openPopup, closePopup } from './scripts/modal.js';
 import { enableValidation, clearValidation } from './scripts/validation.js';
+import { editProfile } from './scripts/api.js';
 
 
 // DOM узлы модалки редактирования профиля
@@ -36,19 +37,6 @@ export function renderCards() {
 // Отрисовываем уже имеющиеся карточки из массива
 renderCards();
 
-//Редактируем данные профиля
-fetch('https://nomoreparties.co/v1/cohortId/users/me', {
-    method: 'PATCH',
-    headers: {
-      authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: nameInput.value,
-      about: professionInput.value
-    })
-  });
-
 // Открываем модалку редактирования профиля
 profileEditButton.addEventListener('click', () => {
     clearValidation(profileEditPopup);
@@ -56,27 +44,6 @@ profileEditButton.addEventListener('click', () => {
     professionInput.value = profileProfession.textContent
     openPopup(profileEditPopup);
 })
-
-function editProfile(updatedName, updatedProfession) {
-    fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
-        method: 'PATCH',
-        headers: {
-            authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: updatedName,
-            about: updatedProfession
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
 
 // Рассказываем как именно сохранить данные профиля после редактирования
 function saveChangedProfile(evt) {
