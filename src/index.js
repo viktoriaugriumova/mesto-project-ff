@@ -1,7 +1,7 @@
 import './pages/index.css';
 import { initialCards } from './scripts/cards.js'
 import { createCard, deleteCard, makeLikeButtonActive } from './scripts/card.js';
-import { closeOnOverlay, closeOnEsc, closeOnCross, openPopup, closePopup } from './scripts/modal.js';
+import { openPopup, closePopup } from './scripts/modal.js';
 import { enableValidation, clearValidation } from './scripts/validation.js';
 import { editProfile } from './scripts/api.js';
 
@@ -20,11 +20,6 @@ const professionInput = profileEditForm.querySelector('input[name="description"]
 const cardAddButton = document.querySelector('.profile__add-button')
 const cardAddPopup = document.querySelector('.popup_type_new-card')
 const cardAddForm = cardAddPopup.querySelector('.popup__form')
-const cardAddNameInput = cardAddForm.querySelector('.popup__input_type_card-name')
-const cardAddLinkInput = cardAddForm.querySelector('.popup__input_type_url')
-
-// DOM узлы моалки с картинкой
-const imagePopup = document.querySelector('.popup_type_image')
 
 // Вывести карточки на страницу
 export function renderCards() {
