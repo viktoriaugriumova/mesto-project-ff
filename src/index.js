@@ -56,7 +56,8 @@ profileEditPopup.addEventListener('submit', saveChangedProfile);
 
 // Открываем модалку добавления новой карточки
 cardAddButton.addEventListener('click', () => {
-    openPopup(cardAddPopup)
+    clearValidation(cardAddPopup);
+    openPopup(cardAddPopup);
 })
 
 // Создаем новый объект карточки с помощью createCard
