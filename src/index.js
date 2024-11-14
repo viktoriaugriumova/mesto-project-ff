@@ -21,16 +21,23 @@ const cardAddButton = document.querySelector('.profile__add-button')
 const cardAddPopup = document.querySelector('.popup_type_new-card')
 const cardAddForm = cardAddPopup.querySelector('.popup__form')
 
-// Вывести карточки на страницу
-export function renderCards() {
-    for (let i = 0; i < initialCards.length; i++) {
-        const newCard = createCard(initialCards[i], deleteCard, makeLikeButtonActive, openImagePopup);
-        cardsContainer.append(newCard);
-    }
-};
+// // Вывести карточки на страницу
+// export function renderCards() {
+//     for (let i = 0; i < initialCards.length; i++) {
+//         const newCard = createCard(initialCards[i], deleteCard, makeLikeButtonActive, openImagePopup);
+//         cardsContainer.append(newCard);
+//     }
+// };
 
-// Отрисовываем уже имеющиеся карточки из массива
-renderCards();
+export function renderCards(cardsData) {
+    cardsContainer.innerHTML = ''; // Очистить контейнер перед добавлением новых карточек
+
+    // Перебираем массив карточек и выводим их на страницу
+    cardsData.forEach(card => {
+        const newCard = createCard(card, deleteCard, makeLikeButtonActive, openImagePopup);
+        cardsContainer.append(newCard);
+    });
+};
 
 // Открываем модалку редактирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -134,5 +141,45 @@ function updateProfileInfo(user) {
     profileImage.value = user.avatar;
 }
 
-//Вызываем функцию
+//Вызываем функцию чтобы отобразить верные данные в профиле
 getUser();
+
+// Функция получения карточек с сервера
+export function fetchCards() {
+    // Создаём массив с промисами для каждого запроса
+    const requests = [
+        fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
+            method: 'GET',
+            headers: {
+                authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()), // Получаем данные о пользователе
+
+        fetch('https://nomoreparties.co/v1/wff-cohort-27/cards', {
+            method: 'GET',
+            headers: {
+                authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()) // Получаем данные о карточках
+    ];
+
+    // Используем Promise.all для параллельного выполнения обоих запросов
+    return Promise.all(requests)
+        .then(([userData, cardsData]) => {
+            console.log('User data:', userData);
+            console.log('Cards data:', cardsData);
+            
+            // Передаем массив карточек в renderCards
+            renderCards(cardsData);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            renderCards([]);
+        });
+}
+
+
+fetchCards();
+
