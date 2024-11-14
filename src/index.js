@@ -81,11 +81,12 @@ export function createNewCardObject(deleteCard, makeLikeButtonActive, openImageP
         link: cardAddForm.querySelector('input[name="link"]').value,
 	}
 
+    makeNewCardAtServer(newCardParameters.name, newCardParameters.link);
+
 	const newCard = createCard(newCardParameters, deleteCard, makeLikeButtonActive, openImagePopup)
     console.log(newCard);
     return newCard;
 }
-
 
 // Рассказываем как именно сохранить данные новой карточки
 function addNewCard(evt) {
@@ -180,6 +181,24 @@ export function fetchCards() {
         });
 }
 
-
 fetchCards();
 
+
+// Добавление новой карточки
+function makeNewCardAtServer(newCardName, newCardLink) {
+    return fetch('https://nomoreparties.co/v1/wff-cohort-27/cards', {
+        method: 'POST',
+        headers: {
+          authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: newCardName,
+            link: newCardLink
+        })
+    })
+        .then(res => res.json())
+        .then((result) => {
+          console.log(result);
+    }); 
+}
