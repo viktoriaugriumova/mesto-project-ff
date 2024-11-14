@@ -6,7 +6,21 @@ export function deleteCard(event) {
 
 // Обработчик кнопки лайк
 export function makeLikeButtonActive(event) {
-	event.target.classList.toggle('card__like-button_is-active');
+    const likeButton = event.target;
+    const likeCountElement = likeButton.closest('.card').querySelector('.card__like-count');
+    let likeCount = parseInt(likeCountElement.textContent, 10);
+
+    // Переключаем класс активности для лайка
+    likeButton.classList.toggle('card__like-button_is-active');
+
+    // Увеличиваем или уменьшаем счётчик в зависимости от состояния лайка
+    if (likeButton.classList.contains('card__like-button_is-active')) {
+        likeCount += 1;
+    } else {
+        likeCount -= 1;
+    }
+
+    likeCountElement.textContent = likeCount;
 }
 
 // Функция создания карточки
