@@ -2,8 +2,12 @@ import './pages/index.css';
 import { createCard, deleteCard, makeLikeButtonActive } from './scripts/card.js';
 import { openPopup, closePopup } from './scripts/modal.js';
 import { enableValidation, clearValidation } from './scripts/validation.js';
-import { getUser, editProfile, fetchCards } from './scripts/api.js';
+import { getUser, editProfile, fetchCards, makeNewCardAtServer } from './scripts/api.js';
 
+// DOM узлы профиля
+const profileTitle = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__description');
+const profileImage = document.querySelector('.profile__image');
 
 // DOM узлы модалки редактирования профиля
 const cardsContainer = document.querySelector('.places__list');
@@ -20,6 +24,14 @@ const cardAddButton = document.querySelector('.profile__add-button')
 const cardAddPopup = document.querySelector('.popup_type_new-card')
 const cardAddForm = cardAddPopup.querySelector('.popup__form')
 
+getUser();
+
+// Функция обновления инфы о юзере на странице
+export function updateProfileInfo(user) {
+    profileTitle.textContent = user.name;
+    profileDescription.textContent = user.about;
+    profileImage.value = user.avatar;
+}
 
 export function renderCards(cardsData) {
     cardsContainer.innerHTML = ''; // Очистить контейнер перед добавлением новых карточек
@@ -30,6 +42,8 @@ export function renderCards(cardsData) {
         cardsContainer.append(newCard);
     });
 };
+
+fetchCards();
 
 // Открываем модалку редактирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -105,59 +119,3 @@ export function openImagePopup(imageUrl, imageAlt) {
 
 //Включаем валидацию для всех форм
 enableValidation();
-
-//API
-
-// DOM узлы профиля
-const profileTitle = document.querySelector('.profile__title');
-const profileDescription = document.querySelector('.profile__description');
-const profileImage = document.querySelector('.profile__image');
-
-getUser();
-
-const user = await getUser();
-console.log('User ID:', user._id);
-console.log('User Name:', user.name);
-
-// Функция обновления инфы о юзере на странице
-export function updateProfileInfo(user) {
-    profileTitle.textContent = user.name;
-    profileDescription.textContent = user.about;
-    profileImage.value = user.avatar;
-}
-
-fetchCards();
-
-// Добавление новой карточки
-function makeNewCardAtServer(newCardName, newCardLink) {
-    return fetch('https://nomoreparties.co/v1/wff-cohort-27/cards', {
-        method: 'POST',
-        headers: {
-          authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: newCardName,
-            link: newCardLink
-        })
-    })
-        .then(res => res.json())
-        .then((result) => {
-          console.log(result);
-    }); 
-}
-
-// // Удаление карточки на сервере
-// function deleteCardFromServer(cardId) {
-//     return fetch(`https://nomoreparties.co/v1/wff-cohort-27/cards/${cardId}`, {
-//         method: 'DELETE',
-//         headers: {
-//           authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c',
-//           'Content-Type': 'application/json'
-//         },
-//     })
-//         .then(res => res.json())
-//         .then(() => {
-//           console.log('Success delete');
-//     }); 
-// }
