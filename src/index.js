@@ -1,5 +1,4 @@
 import './pages/index.css';
-import { initialCards } from './scripts/cards.js'
 import { createCard, deleteCard, makeLikeButtonActive } from './scripts/card.js';
 import { openPopup, closePopup } from './scripts/modal.js';
 import { enableValidation, clearValidation } from './scripts/validation.js';
@@ -21,13 +20,6 @@ const cardAddButton = document.querySelector('.profile__add-button')
 const cardAddPopup = document.querySelector('.popup_type_new-card')
 const cardAddForm = cardAddPopup.querySelector('.popup__form')
 
-// // Вывести карточки на страницу
-// export function renderCards() {
-//     for (let i = 0; i < initialCards.length; i++) {
-//         const newCard = createCard(initialCards[i], deleteCard, makeLikeButtonActive, openImagePopup);
-//         cardsContainer.append(newCard);
-//     }
-// };
 
 export function renderCards(cardsData) {
     cardsContainer.innerHTML = ''; // Очистить контейнер перед добавлением новых карточек
@@ -122,7 +114,7 @@ const profileDescription = document.querySelector('.profile__description');
 const profileImage = document.querySelector('.profile__image');
 
 //Получение инфы о юзере
-function getUser() {
+export function getUser() {
     return fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
         headers: {
           authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c'
@@ -132,6 +124,7 @@ function getUser() {
         .then((result) => {
           console.log(result);
           updateProfileInfo(result);
+          return result;
     }); 
 }
 

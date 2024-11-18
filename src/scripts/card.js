@@ -1,3 +1,5 @@
+import { getUser, userId } from "../index.js";
+
 //Функция удаления карточки
 export function deleteCard(event) {
     const card = event.target.closest('.places__item');
@@ -45,5 +47,3 @@ export function createCard(newCard, deleteCard, makeLikeButtonActive, openImageP
 
     return cardElement;
 };
-
-
