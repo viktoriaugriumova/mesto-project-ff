@@ -1,3 +1,20 @@
+import { updateProfileInfo } from "../index.js";
+
+export function getUser() {
+    return fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
+        headers: {
+          authorization: 'cb855d73-d078-4680-854c-1ea1edd5e68c'
+        }
+    })
+        .then(res => res.json())
+        .then((result) => {
+          console.log(result);
+          updateProfileInfo(result);
+          return result;
+    }); 
+}
+
+
 // Редактируем данные профиля
 export function editProfile(updatedName, updatedProfession) {
     fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
