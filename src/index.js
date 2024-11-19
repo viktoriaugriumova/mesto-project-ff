@@ -33,15 +33,16 @@ export function updateProfileInfo(user) {
     profileImage.value = user.avatar;
 }
 
-export function renderCards(cardsData) {
+// Отрисовываем карточки
+export function renderCards(cardsData, deleteCard, makeLikeButtonActive, openImagePopup, userId) {
     cardsContainer.innerHTML = ''; // Очистить контейнер перед добавлением новых карточек
 
-    // Перебираем массив карточек и выводим их на страницу
+    // Перебираем массив карточек и добавляем их на страницу
     cardsData.forEach(card => {
-        const newCard = createCard(card, deleteCard, makeLikeButtonActive, openImagePopup);
+        const newCard = createCard(card, deleteCard, makeLikeButtonActive, openImagePopup, userId);
         cardsContainer.append(newCard);
     });
-};
+}
 
 fetchCards();
 
@@ -80,17 +81,18 @@ cardAddButton.addEventListener('click', () => {
     openPopup(cardAddPopup);
 })
 
-// Создаем новый объект карточки с помощью createCard
-export function createNewCardObject(deleteCard, makeLikeButtonActive, openImagePopup) {
+// // Создаем новый объект карточки с помощью createCard
+export function createNewCardObject(deleteCard, makeLikeButtonActive, openImagePopup, userId) {
     const newCardParameters = {
         name: cardAddForm.querySelector('input[name="place-name"]').value,
         link: cardAddForm.querySelector('input[name="link"]').value,
-	}
+    };
 
+    // Отправляем данные о новой карточке на сервер
     makeNewCardAtServer(newCardParameters.name, newCardParameters.link);
 
-	const newCard = createCard(newCardParameters, deleteCard, makeLikeButtonActive, openImagePopup)
-    console.log(newCard);
+    // Создаём карточку
+    const newCard = createCard(newCardParameters, deleteCard, makeLikeButtonActive, openImagePopup, userId);
     return newCard;
 }
 

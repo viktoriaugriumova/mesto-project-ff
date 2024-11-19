@@ -26,24 +26,34 @@ export function makeLikeButtonActive(event) {
 }
 
 // Функция создания карточки
-export function createCard(newCard, deleteCard, makeLikeButtonActive, openImagePopup) {
+export function createCard(newCard, deleteCard, makeLikeButtonActive, openImagePopup, userId) {
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     const cardImage = cardElement.querySelector('.card__image');
 
+    // Устанавливаем данные карточки
     cardElement.querySelector('.card__title').textContent = newCard.name;
-    cardElement.querySelector('.card__image').src = newCard.link;
-    cardElement.querySelector('.card__image').alt = newCard.alt;
+    cardImage.src = newCard.link;
+    cardImage.alt = newCard.alt;
 
+    // Настраиваем кнопку удаления
     const deleteCardButton = cardElement.querySelector('.card__delete-button');
-    deleteCardButton.addEventListener('click', deleteCard);
+    if (newCard.owner && newCard.owner._id === userId) {
+        deleteCardButton.addEventListener('click', deleteCard);
+    } else {
+        deleteCardButton.remove(); // Удаляем кнопку для чужих карточек
+    }
 
-    const cardLikeButton = cardElement.querySelector('.card__like-button')
+    // Настраиваем кнопку лайка
+    const cardLikeButton = cardElement.querySelector('.card__like-button');
     cardLikeButton.addEventListener('click', makeLikeButtonActive);
 
+    // Настраиваем открытие попапа с изображением
     cardImage.addEventListener('click', () =>
-		openImagePopup(cardImage.src, cardImage.alt)
-	)
+        openImagePopup(cardImage.src, cardImage.alt)
+    );
 
     return cardElement;
-};
+}
+
+
